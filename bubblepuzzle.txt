@@ -1,0 +1,11 @@
+Game synopsis:
+You are hired as an inspector to determine whether a product is "air-tight" or not, providing proof of this by breaking into said product with your Bubble Tool.
+Find holes as entry points and then insert air to burst out errant shelling, marring the otherwise smooth surface. If enough material comes off, it can be written as being "insecure"; if only a little falls off, it is considered "secure".
+By damaging these products visibly, you will get paid the big bucks, so do a good job and be nice and thorough!
+
+---
+
+Commit 1: I was moving heavy stuff around the house today, but I can't seem to sleep despite how spent I am! I guess I can join a jam anyway. I plan to make it a grid maze, super basic, not challenging, more of a demonstration than a game. You will puff air into sediment and once a crevice is fully-packed with air, it will pop out the errant sediment. Fostering the gauge while navigating turns using a looong bubble seems to be the extent of the gameplay.
+Since it would be a grid structure, it's like one of those LeetCode problems, except I don't have to be restricted by array stuff! I get to be like "if pressing left: if left has a wall, nah; else, extend bubble that way and make the gauge reflect the more laborious blowing". Much better.
+Right now I want to make the cursor be what you control, and the chipmunk (who is you) follows the cursor to its destination of hopefully a visible crack. For some reason the chipmunk and gauge left style attributes won't update. They share that they update theirs by checking another's, but the console.log() for said other's left (cursor) reflects a legible number. This is a mystery for when I don't have this headache. I'm way out of my regular waking hours. I should be sleepier after heavy lifting, no?
+I'll do something or other with my time until sleep strikes.
