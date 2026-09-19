@@ -1,7 +1,10 @@
+
 hotly = 0;
 hotspots = ["10%", "18%", "26%", "34%", "42%", "50%", "58%", "66%", "74%", "82%"];
 player = document.getElementById("player");
 gauge = document.getElementById("gauge");
+munkTracks = 10;
+munkMind = 15;
 document.addEventListener('keydown', (e) =>{
     if(e.key === 'ArrowLeft') {
         if(hotly > 0){
@@ -76,15 +79,19 @@ function leftBehind(){
     console.log("leftBehind call!");
     setTimeout(() => {
         if(player.style.left > cursor.style.left){
-            player.style.left = (parseInt(player.style.left) - 0.5) + "%";
-            gauge.style.left = (5 + parseInt(player.style.left)) + "%";
+            munkTracks = munkTracks - 0.5;
+            munkMind = munkMind - 0.5;
+            player.style.left = munkTracks + "%";
+            gauge.style.left = munkMind + "%";
             player.src = "images/chipwalk2.png";
             console.log("Cursor left is greater than chip left; chip x: " + player.style.left + " cursor x: " + cursor.style.left);
             leftBehind();
         }
         else if(player.style.left < cursor.style.left){
-            player.style.left = (parseInt(player.style.left) + 0.5) + "%";
-            gauge.style.left = (5 + parseInt(player.style.left)) + "%";
+            munkTracks = munkTracks + 0.5;
+            munkMind = munkMind + 0.5;
+            player.style.left = munkTracks + "%";
+            gauge.style.left = munkMind + "%";
             player.src = "images/chipwalk0.png";
             console.log("Cursor left is less than chip left; chip x: " + player.style.left + " cursor x: " + cursor.style.left);
             leftBehind();
