@@ -18,7 +18,7 @@ okok.onclick = () =>{
 
 let score = document.getElementById("score");
 let points = 0;
-score.innerHTML = "Score: " + points;
+score.innerHTML = "Score: " + points + "/22";
 
 //10x6 grid of sediment and air.
 let sedimentBoogey = 10;
@@ -161,7 +161,7 @@ document.addEventListener('keydown', (e) =>{
                             document.getElementById("air" + rockerand).src = "images/bubbles/bubble" + rockMaster[rockerand] + ".png";
                             if(rockMaster[rockerand] == 4){
                                 points ++;
-                                score.innerHTML = "Score: " + points;
+                                score.innerHTML = "Score: " + points + "/22";
                             }
                         }
                         meterBar -= 5;
@@ -184,7 +184,7 @@ document.addEventListener('keydown', (e) =>{
                                 rockerand --;
                                 document.getElementById("air" + rockerand).src = "images/bubbles/bubble4.png";
                                 points ++;
-                                score.innerHTML = "Score: " + points;
+                                score.innerHTML = "Score: " + points + "/22";
                                 console.log("adjacent node Left is now stage 4. Moving on to the new node: " + rockerand);
                             }
                             else{
@@ -210,7 +210,7 @@ document.addEventListener('keydown', (e) =>{
                                 rockerand ++;
                                 document.getElementById("air" + rockerand).src = "images/bubbles/bubble4.png";
                                 points ++;
-                                score.innerHTML = "Score: " + points;
+                                score.innerHTML = "Score: " + points + "/22";
                                 console.log("adjacent node Right is now stage 4. Moving on to the new node: " + rockerand);
                             }
                             else{
@@ -236,7 +236,7 @@ document.addEventListener('keydown', (e) =>{
                                 rockerand = rockerand - 10;
                                 document.getElementById("air" + rockerand).src = "images/bubbles/bubble4.png";
                                 points ++;
-                                score.innerHTML = "Score: " + points;
+                                score.innerHTML = "Score: " + points + "/22";
                                 console.log("adjacent node Up is now stage 4. Moving on to the new node: " + rockerand);
                             }
                             else{
@@ -262,7 +262,7 @@ document.addEventListener('keydown', (e) =>{
                                 rockerand = rockerand + 10;
                                 document.getElementById("air" + rockerand).src = "images/bubbles/bubble4.png";
                                 points ++;
-                                score.innerHTML = "Score: " + points;
+                                score.innerHTML = "Score: " + points + "/22";
                                 console.log("adjacent node Down is now stage 4. Moving on to the new node: " + rockerand);
                             }
                             else{

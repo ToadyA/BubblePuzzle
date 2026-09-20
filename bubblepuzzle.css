@@ -1,3 +1,7 @@
+body{
+    background-color: #656875;
+}
+
 #greetings{
     position: absolute;
     width: 80%;
@@ -122,7 +126,10 @@
     font-size: 24px;
     z-index: 5;
 }
-
+#score{
+    font-weight: bold;
+    font-size: 20px;
+}
 #sparkle{
     position: absolute;
     left: 4%;
