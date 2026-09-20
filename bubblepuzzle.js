@@ -22,16 +22,16 @@ let rockID = 0;
 //track the whole of everything. Why not. This is the easiest solution.
 //in fact, I can just draw the map in here instead of figuring out what I want with math. huh.
 
-let rockMaster = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,];
+let rockMaster = [9, 0, 9, 9, 0, 9, 9, 9, 9, 0,
+                  9, 0, 9, 0, 0, 9, 9, 9, 9, 0,
+                  0, 0, 9, 9, 9, 9, 9, 9, 0, 0,
+                  0, 9, 9, 9, 0, 9, 9, 9, 0, 9,
+                  0, 9, 9, 9, 0, 0, 0, 0, 0, 9,
+                  0, 0, 9, 9, 9, 9, 9, 9, 9, 9,];
 
 for(let i = 0; i < 6; i ++){
     for(let j = 0; j < 10; j ++){
-        if((rockID < 10 && rockID % 2 == 0) || rockID % 3 == 2 || rockID % 7 == 1 || rockID % 4 == 2){
+        if(rockMaster[rockID] == 9){
             let sediment = document.createElement("img");
             sediment.src = "images/bubbles/sediment.png";
             sediment.className = "gridworks";
@@ -40,7 +40,6 @@ for(let i = 0; i < 6; i ++){
             sedimentBoogey = 17 + (i * 12);
             sediment.style.top = sedimentBoogey + "%";
             document.body.appendChild(sediment);
-            rockMaster[rockID] = 9;
         }
         else{
             let airhead = document.createElement("img");
@@ -52,7 +51,6 @@ for(let i = 0; i < 6; i ++){
             sedimentBoogey = 17 + (i * 12);
             airhead.style.top = sedimentBoogey + "%";
             document.body.appendChild(airhead);
-            rockMaster[rockID] = 0;
         }
         console.log(rockID + ": " + rockMaster[rockID]);
         //rockID tracks the row-col natively thanks to incrementing exactly here: the tens place is the column, the ones place is the row.
@@ -146,7 +144,7 @@ document.addEventListener('keydown', (e) =>{
         document.addEventListener('keydown', (f) =>{
             if(rockerand <= 9 && rockMaster[rockerand] != 4){
                 if(f.key === 'ArrowDown' && breathing == false){
-                    if(hDown == false){
+                    if(hDown == false && meterBar > 0){
                         console.log("early breaths");
                         if(rockMaster[rockerand] == 0){
                             rockMaster[rockerand] = 8;
@@ -156,12 +154,14 @@ document.addEventListener('keydown', (e) =>{
                             rockMaster[rockerand] --;
                             document.getElementById("air" + rockerand).src = "images/bubbles/bubble" + rockMaster[rockerand] + ".png";
                         }
+                        meterBar -= 5;
+                        meterUpdate();
                         hDown = true;
                     }
                 }
             }
             if(f.key === 'ArrowLeft' && breathing == false){
-                if(hLeft == false){
+                if(hLeft == false && meterBar > 0){
                     console.log("try breathing left.");
                     if(rockerand % 10 != 0){
                         if(rockMaster[rockerand - 1] != 9 && rockMaster[rockerand - 1] != 4){
@@ -185,7 +185,7 @@ document.addEventListener('keydown', (e) =>{
                 }
             }
             else if(f.key === 'ArrowRight' && breathing == false){
-                if(hRight == false){
+                if(hRight == false && meterBar > 0){
                     console.log("try breathing right.");
                     if(rockerand % 10 != 9){
                         if(rockMaster[rockerand + 1] != 9 && rockMaster[rockerand + 1] != 4){
@@ -209,7 +209,7 @@ document.addEventListener('keydown', (e) =>{
                 }
             }
             else if(f.key === 'ArrowUp' && breathing == false){
-                if(hUp == false){
+                if(hUp == false && meterBar > 0){
                     console.log("try breathing up.");
                     if(rockerand >= 10){
                         if(rockMaster[rockerand - 10] != 9 && rockMaster[rockerand - 10] != 4){
@@ -234,7 +234,7 @@ document.addEventListener('keydown', (e) =>{
                 }
             }
             else if(f.key === 'ArrowDown' && breathing == false){
-                if(hDown == false){
+                if(hDown == false && meterBar > 0){
                     console.log("try breathing down.");
                     if(rockerand < 60){
                         if(rockMaster[rockerand + 10] != 9 && rockMaster[rockerand + 10] != 4){
@@ -343,7 +343,7 @@ document.addEventListener('keydown', (e) =>{
 document.addEventListener('keyup', (e) =>{
     if(e.key === ' '){
         breathing = true;
-        if(player.src == "images/chipBlow.png" && meterBar < 110)
+        if(meterBar < 110)
             player.src = "images/chipGasp.png"
         oxygenGreed();
     }

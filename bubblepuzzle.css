@@ -13,7 +13,7 @@
     left: 15.5%;
     font-weight: bold;
     font-size: 22px;
-    color: black;
+    color: white;
     z-index: 5;
 }
 #inst1{
@@ -36,29 +36,29 @@
 }
 .instructionsB{
     position: absolute;
-    left: 15.6%;
+    left: 15.7%;
     font-weight: bold;
     font-size: 22px;
-    color: white;
+    color: black;
     z-index: 4;
 }
 #inst1B{
-    top: 15.1%;
+    top: 15.2%;
 }
 #inst2B{
-    top: 20.1%;
+    top: 20.2%;
 }
 #inst3B{
-    top: 25.1%;
+    top: 25.2%;
 }
 #inst4B{
-    top: 30.1%;
+    top: 30.2%;
 }
 #inst5B{
-    top: 35.1%;
+    top: 35.2%;
 }
 #inst6B{
-    top: 40.1%;
+    top: 40.2%;
 }
 #begone{
     position: absolute;
@@ -103,7 +103,7 @@
     position: absolute;
     width: 0.6%;
     height: 5.5%;
-    background-color: greenyellow;
+    background-color: rgb(17, 161, 17);
     z-index: 1;
     left: 15.2%;
     top: 1%;
