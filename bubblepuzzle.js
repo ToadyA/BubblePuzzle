@@ -1,9 +1,18 @@
 
 //10x6 grid of sediment and air.
 let sedimentBoogey = 10;
+let rockID = 0;
+//track the whole of everything. Why not. This is the easiest solution.
+//in fact, I can just draw the map in here instead of figuring out what I want with math. huh.
+let rockMaster = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+                  9, 9, 9, 9, 9, 9, 9, 9, 9, 9,];
 for(let i = 0; i < 6; i ++){
     for(let j = 0; j < 10; j ++){
-        //if(){
+        if((rockID < 10 && rockID % 2 == 0) || rockID % 3 == 2 || rockID % 7 == 1 || rockID % 4 == 2){
             let sediment = document.createElement("img");
             sediment.src = "images/bubbles/sediment.png";
             sediment.className = "gridworks";
@@ -12,31 +21,61 @@ for(let i = 0; i < 6; i ++){
             sedimentBoogey = 17 + (i * 12);
             sediment.style.top = sedimentBoogey + "%";
             document.body.appendChild(sediment);
-            /*
+            rockMaster[rockID] = 9;
         }
         else{
             let airhead = document.createElement("img");
             airhead.src = "images/twinkle0.png";
+            airhead.id = "air" + rockID;
             airhead.className = "gridworks";
             sedimentBoogey = 10 + (j * 8);
             airhead.style.left = sedimentBoogey + "%";
             sedimentBoogey = 17 + (i * 12);
             airhead.style.top = sedimentBoogey + "%";
             document.body.appendChild(airhead);
+            rockMaster[rockID] = 0;
         }
-            */
+            
+        //rockID tracks the row-col natively thanks to incrementing exactly here: the tens place is the column, the ones place is the row.
+        //when checking for an adjacent bubble, you only need check +-10 and +-1 to the currently interested rockID.
+        rockID ++;
     }
 }
 
-hotly = 0;
-hotspots = ["10%", "18%", "26%", "34%", "42%", "50%", "58%", "66%", "74%", "82%"];
-player = document.getElementById("player");
-gauge = document.getElementById("gauge");
-meter = document.getElementById("meter");
-munkTracks = 10;
-munkMind = 15;
+//cursor location spots and tagalongs for the chipmunk and the gauge
+let hotly = 0;
+let hotspots = ["10%", "18%", "26%", "34%", "42%", "50%", "58%", "66%", "74%", "82%"];
+let player = document.getElementById("player");
+let gauge = document.getElementById("gauge");
+let meter = document.getElementById("meter");
+let munkTracks = 10;
+let munkMind = 15;
+
+//node tracking: tens place is the column, ones place is the row, starting below the chipmunk.
+let rockerand = hotly;  //as in rock operand, not rock random
 document.addEventListener('keydown', (e) =>{
-    if(e.key === 'ArrowLeft') {
+    if(e.key === ' ') {
+        player.src = "images/chipBlow.png";
+        if(rockMaster[rockerand] == 9)
+            console.log("that is solid. mwah.");
+        else if(rockMaster[rockerand] == 4){
+            document.addEventListener('keydown', (f) =>{
+                if(f.key === 'ArrowLeft'){
+
+                }
+                else if(f.key === 'ArrowRight'){
+
+                }
+                else if(f.key === 'ArrowUp'){
+
+                }
+                else if(f.key === 'ArrowDown'){
+
+                }
+            });
+        }
+    }   //left/right/up/down have different functionality whilst SpaceBar is held, hence the elseif here
+    else if(e.key === 'ArrowLeft') {
         if(hotly > 0){
             hotly --;
             cursor.style.left = hotspots[hotly];
@@ -50,11 +89,7 @@ document.addEventListener('keydown', (e) =>{
             leftBehind();
         }
     }
-    if(e.key === 'Space') {
-        player.src = "images/chipBlow.png";
-        //perform every check known to man: four for each slot because there is no earthly way to know where the current position is from the perspective of a given slot.
-        //do I need 240 checks every time?
-    }
+
     if(e.key === '0'){
         cursor.style.left = hotspots[0];
         hotly = 0;
@@ -106,8 +141,8 @@ document.addEventListener('keydown', (e) =>{
         leftBehind();
     }
 });
+let inStep = false;
 function leftBehind(){
-    console.log("leftBehind call!");
     setTimeout(() => {
         if(player.style.left > cursor.style.left){
             munkTracks = munkTracks - 0.5;
@@ -117,8 +152,14 @@ function leftBehind(){
             munkMind = munkMind + 0.2;
             meter.style.left = munkMind + "%";
             munkMind = munkMind - 0.2;
-            player.src = "images/chipwalk2.png";
-            console.log("Cursor left is greater than chip left; chip x: " + player.style.left + " cursor x: " + cursor.style.left);
+            if(inStep){
+                player.src = "images/chipwalk2.png";
+                inStep = false;
+            }
+            else{
+                player.src = "images/chipwalk3.png";
+                inStep = true;
+            }
             leftBehind();
         }
         else if(player.style.left < cursor.style.left){
@@ -129,8 +170,14 @@ function leftBehind(){
             munkMind = munkMind + 0.2;
             meter.style.left = munkMind + "%";
             munkMind = munkMind - 0.2;
-            player.src = "images/chipwalk0.png";
-            console.log("Cursor left is less than chip left; chip x: " + player.style.left + " cursor x: " + cursor.style.left);
+            if(inStep){
+                player.src = "images/chipwalk0.png";
+                inStep = false;
+            }
+            else{
+                player.src = "images/chipwalk1.png";
+                inStep = true;
+            }
             leftBehind();
         }  
         else
