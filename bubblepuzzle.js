@@ -4,12 +4,14 @@ let sedimentBoogey = 10;
 let rockID = 0;
 //track the whole of everything. Why not. This is the easiest solution.
 //in fact, I can just draw the map in here instead of figuring out what I want with math. huh.
+//9 is sediment, 0 is an uninitialized space where air may fit in, and 5 is a temporarily altered node where a bubble has been inserted already by me the developer to skip the 0 state for now
 let rockMaster = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
                   9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
                   9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
                   9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
                   9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
                   9, 9, 9, 9, 9, 9, 9, 9, 9, 9,];
+
 for(let i = 0; i < 6; i ++){
     for(let j = 0; j < 10; j ++){
         if((rockID < 10 && rockID % 2 == 0) || rockID % 3 == 2 || rockID % 7 == 1 || rockID % 4 == 2){
@@ -50,39 +52,107 @@ let gauge = document.getElementById("gauge");
 let meter = document.getElementById("meter");
 let munkTracks = 10;
 let munkMind = 15;
+let meterBar = 110; //fullness of the green within the gauge. This depletes while blowing and refills when SpaceBar is lifted. 110 is full, 0 is empty.
 
 //node tracking: tens place is the column, ones place is the row, starting below the chipmunk.
 let rockerand = hotly;  //as in rock operand, not rock random
+let breathing = true;
+
 document.addEventListener('keydown', (e) =>{
     if(e.key === ' ') {
+        breathing = false;
         player.src = "images/chipBlow.png";
         if(rockMaster[rockerand] == 9)
             console.log("that is solid. mwah.");
-        else if(rockMaster[rockerand] == 4){
-            document.addEventListener('keydown', (f) =>{
-                if(f.key === 'ArrowLeft'){
-
-                }
-                else if(f.key === 'ArrowRight'){
-
-                }
-                else if(f.key === 'ArrowUp'){
-
-                }
-                else if(f.key === 'ArrowDown'){
-
-                }
-            });
+        else if(rockMaster[rockerand] <= 4){
+            if(e.key === 'ArrowDown' && breathing == false){
+                    ;
+            }
         }
+        else if(rockMaster[rcokerand] == 5){
+            //prime the node's surroundings for meeting and greeting
+            if(rockMaster[rockerand + 1] == 0)
+                rockMaster[rockerand + 1] = 1;
+            if(rockMaster[rockerand - 1] == 0)
+                rockMaster[rockerand - 1] = 1;
+            if(rockMaster[rockerand + 10] == 0)
+                rockMaster[rockerand + 10] = 1;
+            if(rockerand <= 9){
+                if(rockMaster[rockerand - 10] == 0)
+                    rockMaster[rockerand - 10] = 1;
+            }
+            if(e.key === 'ArrowLeft' && breathing == false){
+                if(rockerand % 10 != 0){
+                    if(rockMaster[rockerand - 1] != 9 && rockMaster[rockerand - 1] != 5){
+                        rockMaster[rockerand - 1] ++;
+                        if(rockMaster[rockerand - 1] == 5){
+                            document.getElementById("air" + (rockerand - 1)).src = "bubble5.png";
+                            rockerand --;
+                        }
+                        else
+                            document.getElementById("air" + (rockerand - 1)).src = "bubbleL" + rockeMaster[rockerand - 1] + ".png";
+                        meterBar -= 5;
+                        meterUpdate();
+                    }
+                }
+                
+            }
+            else if(e.key === 'ArrowRight' && breathing == false){
+                if(rockerand % 10 != 9){
+                    if(rockMaster[rockerand + 1] != 9 && rockMaster[rockerand + 1] != 5){
+                        rockMaster[rockerand + 1] ++;
+                        if(rockMaster[rockerand + 1] == 5){
+                            document.getElementById("air" + (rockerand + 1)).src = "bubble5.png";
+                            rockerand ++;
+                        }
+                        else
+                            document.getElementById("air" + (rockerand + 1)).src = "bubbleR" + rockeMaster[rockerand + 1] + ".png";
+                        meterBar -= 5;
+                        meterUpdate();
+                    }
+                }
+            }
+            else if(e.key === 'ArrowUp' && breathing == false){
+                if(rockerand >= 10){
+                    if(rockMaster[rockerand - 10] != 9 && rockMaster[rockerand - 10] != 5){
+                        rockMaster[rockerand - 10] ++;
+                        if(rockMaster[rockerand - 10] == 5){
+                            document.getElementById("air" + (rockerand - 10)).src = "bubble5.png";
+                            rockerand = rockerand - 10;
+                        }
+                        else
+                            document.getElementById("air" + (rockerand - 10)).src = "bubbleU" + rockeMaster[rockerand - 10] + ".png";
+                        meterBar -= 5;
+                        meterUpdate();
+                    }
+                }
+            }
+            else if(e.key === 'ArrowDown' && breathing == false){
+                if(rockerand < 60){
+                    if(rockMaster[rockerand + 10] != 9 && rockMaster[rockerand + 10] != 5){
+                        rockMaster[rockerand + 10] ++;
+                        if(rockMaster[rockerand + 10] == 5){
+                            document.getElementById("air" + (rockerand + 10)).src = "bubble5.png";
+                            rockerand = rockerand + 10;
+                        }
+                        else
+                            document.getElementById("air" + (rockerand + 10)).src = "bubbleD" + rockeMaster[rockerand + 10] + ".png";
+                        meterBar -= 5;
+                        meterUpdate();
+                    }
+                }
+            }
+        }
+
     }   //left/right/up/down have different functionality whilst SpaceBar is held, hence the elseif here
-    else if(e.key === 'ArrowLeft') {
+    else if(e.key === 'ArrowLeft' && breathing == true) {
         if(hotly > 0){
             hotly --;
             cursor.style.left = hotspots[hotly];
             leftBehind();
         }
     }
-    else if(e.key === 'ArrowRight') {
+    else if(e.key === 'ArrowRight' && breathing == true) {
         if(hotly < 9){
             hotly ++;
             cursor.style.left = hotspots[hotly];
@@ -141,6 +211,42 @@ document.addEventListener('keydown', (e) =>{
         leftBehind();
     }
 });
+
+
+document.addEventListener('keyup', (g) =>{
+    if(g.key === ' '){
+        breathing = true;
+        oxygenGreed();
+        if(player.src == "images/chipBlow.png" && meterBar < 110)
+            player.src = "images/chipGasp.png"
+    }
+});
+
+function oxygenGreed(){
+    setTimeout(() =>{
+        meterBar += 5;
+        if(meterBar >= 110)
+            meterBar = 110;
+        meterUpdate();
+        if(breathing == true && meterBar < 110)
+            oxygenGreed();
+        else
+            player.src = "images/chipWait.png";
+    }, 50);
+}
+function meterUpdate(){//top: 1%; height: 5.5%;
+    //as the meterBar depletes, it goes visibly down, such that top increases and height decreases, until top is at 6.5% and height is at 0%.
+    meterBar = meterBar / 20;
+    meterBar = 5.5 - meterBar;
+    meter.style.height = meterBar + "%";
+    meterBar = 5.5 - meterBar;
+
+    meterBar ++;
+    meter.style.top = meterBar + "%";
+    meterBar --;
+    meterBar = meterBar * 20;
+}
+
 let inStep = false;
 function leftBehind(){
     setTimeout(() => {
