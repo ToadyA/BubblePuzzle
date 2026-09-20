@@ -1,3 +1,20 @@
+let okok = document.getElementById("begone");
+okok.onclick = () =>{
+    okok.style.display = "none";
+    document.getElementById("greetings").style.display = "none";
+    document.getElementById("inst1").style.display = "none";
+    document.getElementById("inst2").style.display = "none";
+    document.getElementById("inst3").style.display = "none";
+    document.getElementById("inst4").style.display = "none";
+    document.getElementById("inst5").style.display = "none";
+    document.getElementById("inst6").style.display = "none";
+    document.getElementById("inst1B").style.display = "none";
+    document.getElementById("inst2B").style.display = "none";
+    document.getElementById("inst3B").style.display = "none";
+    document.getElementById("inst4B").style.display = "none";
+    document.getElementById("inst5B").style.display = "none";
+    document.getElementById("inst6B").style.display = "none";
+}
 
 //10x6 grid of sediment and air.
 let sedimentBoogey = 10;
@@ -36,8 +53,12 @@ for(let i = 0; i < 6; i ++){
             airhead.style.top = sedimentBoogey + "%";
             document.body.appendChild(airhead);
             rockMaster[rockID] = 0;
+            if(rockID < 10){
+                rockMaster[rockID] = 5;
+                airhead.src = "images/bubbles/bubble5.png";
+            }
         }
-            
+        console.log(rockID + ": " + rockMaster[rockID]);
         //rockID tracks the row-col natively thanks to incrementing exactly here: the tens place is the column, the ones place is the row.
         //when checking for an adjacent bubble, you only need check +-10 and +-1 to the currently interested rockID.
         rockID ++;
@@ -64,12 +85,19 @@ document.addEventListener('keydown', (e) =>{
         player.src = "images/chipBlow.png";
         if(rockMaster[rockerand] == 9)
             console.log("that is solid. mwah.");
-        else if(rockMaster[rockerand] <= 4){
+        else if(rockerand <= 9){
             if(e.key === 'ArrowDown' && breathing == false){
-                    ;
+                if(rockMaster[rockerand] == 0){
+                    rockMaster[rockerand] = 8;
+                    document.getElementById("air" + (rockerand - 1)).src = "images/bubbles/bubble8.png";
+                }
+                if(rockMaster[rockerand] > 5 && rockMaster[rockerand] != 9){
+                    document.getElementById("air" + rockerand).src = "images/bubbles/bubble" + rockMaster[rockerand] + ".png";
+                    rockMaster[rockerand] --;
+                }
             }
         }
-        else if(rockMaster[rcokerand] == 5){
+        else if(rockMaster[rockerand] == 5){
             //prime the node's surroundings for meeting and greeting
             if(rockMaster[rockerand + 1] == 0)
                 rockMaster[rockerand + 1] = 1;
@@ -86,11 +114,16 @@ document.addEventListener('keydown', (e) =>{
                     if(rockMaster[rockerand - 1] != 9 && rockMaster[rockerand - 1] != 5){
                         rockMaster[rockerand - 1] ++;
                         if(rockMaster[rockerand - 1] == 5){
-                            document.getElementById("air" + (rockerand - 1)).src = "bubble5.png";
                             rockerand --;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubble5.png";
+                            console.log("adjacent node Left is now stage 5. Moving on to the new node: " + rockerand);
                         }
-                        else
-                            document.getElementById("air" + (rockerand - 1)).src = "bubbleL" + rockeMaster[rockerand - 1] + ".png";
+                        else{
+                            rockerand --;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubbleL" + rockMaster[rockerand] + ".png";
+                            rockerand ++;
+                            console.log("adjacent node Left has otherwise incremented.");
+                        }
                         meterBar -= 5;
                         meterUpdate();
                     }
@@ -102,11 +135,16 @@ document.addEventListener('keydown', (e) =>{
                     if(rockMaster[rockerand + 1] != 9 && rockMaster[rockerand + 1] != 5){
                         rockMaster[rockerand + 1] ++;
                         if(rockMaster[rockerand + 1] == 5){
-                            document.getElementById("air" + (rockerand + 1)).src = "bubble5.png";
                             rockerand ++;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubble5.png";
+                            console.log("adjacent node Right is now stage 5. Moving on to the new node: " + rockerand);
                         }
-                        else
-                            document.getElementById("air" + (rockerand + 1)).src = "bubbleR" + rockeMaster[rockerand + 1] + ".png";
+                        else{
+                            rockerand ++;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubbleR" + rockMaster[rockerand] + ".png";
+                            rockerand --;
+                            console.log("adjacent node Right has otherwise incremented.");
+                        }
                         meterBar -= 5;
                         meterUpdate();
                     }
@@ -117,11 +155,17 @@ document.addEventListener('keydown', (e) =>{
                     if(rockMaster[rockerand - 10] != 9 && rockMaster[rockerand - 10] != 5){
                         rockMaster[rockerand - 10] ++;
                         if(rockMaster[rockerand - 10] == 5){
-                            document.getElementById("air" + (rockerand - 10)).src = "bubble5.png";
                             rockerand = rockerand - 10;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubble5.png";
+                            
+                            console.log("adjacent node Up is now stage 5. Moving on to the new node: " + rockerand);
                         }
-                        else
-                            document.getElementById("air" + (rockerand - 10)).src = "bubbleU" + rockeMaster[rockerand - 10] + ".png";
+                        else{
+                            rockerand = rockerand - 10;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubbleU" + rockMaster[rockerand] + ".png";
+                            rockerand = rockerand + 10;
+                            console.log("adjacent node Up has otherwise incremented.");
+                        }
                         meterBar -= 5;
                         meterUpdate();
                     }
@@ -132,11 +176,17 @@ document.addEventListener('keydown', (e) =>{
                     if(rockMaster[rockerand + 10] != 9 && rockMaster[rockerand + 10] != 5){
                         rockMaster[rockerand + 10] ++;
                         if(rockMaster[rockerand + 10] == 5){
-                            document.getElementById("air" + (rockerand + 10)).src = "bubble5.png";
                             rockerand = rockerand + 10;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubble5.png";
+                            
+                            console.log("adjacent node Down is now stage 5. Moving on to the new node: " + rockerand);
                         }
-                        else
-                            document.getElementById("air" + (rockerand + 10)).src = "bubbleD" + rockeMaster[rockerand + 10] + ".png";
+                        else{
+                            rockerand = rockerand + 10;
+                            document.getElementById("air" + rockerand).src = "images/bubbles/bubbleD" + rockMaster[rockerand] + ".png";
+                            rockerand = rockerand - 10;
+                            console.log("adjacent node Down has otherwise incremented.");
+                        }
                         meterBar -= 5;
                         meterUpdate();
                     }
@@ -149,6 +199,7 @@ document.addEventListener('keydown', (e) =>{
         if(hotly > 0){
             hotly --;
             cursor.style.left = hotspots[hotly];
+            rockerand = hotly;
             leftBehind();
         }
     }
@@ -156,6 +207,7 @@ document.addEventListener('keydown', (e) =>{
         if(hotly < 9){
             hotly ++;
             cursor.style.left = hotspots[hotly];
+            rockerand = hotly;
             leftBehind();
         }
     }
@@ -163,58 +215,68 @@ document.addEventListener('keydown', (e) =>{
     if(e.key === '0'){
         cursor.style.left = hotspots[0];
         hotly = 0;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '1'){
         cursor.style.left = hotspots[1];
         hotly = 1;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '2'){
         cursor.style.left = hotspots[2];
         hotly = 2;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '3'){
         cursor.style.left = hotspots[3];
         hotly = 3;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '4'){
         cursor.style.left = hotspots[4];
         hotly = 4;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '5'){
         cursor.style.left = hotspots[5];
         hotly = 5;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '6'){
         cursor.style.left = hotspots[6];
         hotly = 6;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '7'){
         cursor.style.left = hotspots[7];
         hotly = 7;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '8'){
         cursor.style.left = hotspots[8];
         hotly = 8;
+        rockerand = hotly;
         leftBehind();
     }
     else if(e.key === '9'){
         cursor.style.left = hotspots[9];
         hotly = 9;
+        rockerand = hotly;
         leftBehind();
     }
 });
 
 
-document.addEventListener('keyup', (g) =>{
-    if(g.key === ' '){
+document.addEventListener('keyup', (e) =>{
+    if(e.key === ' '){
         breathing = true;
         oxygenGreed();
         if(player.src == "images/chipBlow.png" && meterBar < 110)

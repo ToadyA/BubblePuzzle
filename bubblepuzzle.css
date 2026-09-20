@@ -1,3 +1,74 @@
+#greetings{
+    position: absolute;
+    width: 80%;
+    left: 8.5%;
+    top: 10%;
+    height: 80%;
+    z-index: 3;
+    border: 4px solid rgb(5, 3, 27);
+    background-color: rgb(60, 58, 70);
+}
+.instructions{
+    position: absolute;
+    left: 15.5%;
+    font-weight: bold;
+    font-size: 22px;
+    color: black;
+    z-index: 5;
+}
+#inst1{
+    top: 15%;
+}
+#inst2{
+    top: 20%;
+}
+#inst3{
+    top: 25%;
+}
+#inst4{
+    top: 30%;
+}
+#inst5{
+    top: 35%;
+}
+#inst6{
+    top: 40%;
+}
+.instructionsB{
+    position: absolute;
+    left: 15.6%;
+    font-weight: bold;
+    font-size: 22px;
+    color: white;
+    z-index: 4;
+}
+#inst1B{
+    top: 15.1%;
+}
+#inst2B{
+    top: 20.1%;
+}
+#inst3B{
+    top: 25.1%;
+}
+#inst4B{
+    top: 30.1%;
+}
+#inst5B{
+    top: 35.1%;
+}
+#inst6B{
+    top: 40.1%;
+}
+#begone{
+    position: absolute;
+    left: 45%;
+    top: 75%;
+    font-weight: bold;
+    font-size: 22px;
+    z-index: 6;
+}
+
 #stage{
     position: absolute;
     left: -0.5%;
