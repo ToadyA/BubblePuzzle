@@ -106,12 +106,21 @@
     background-color: rgb(17, 161, 17);
     z-index: 1;
     left: 15.2%;
-    top: 1%;
+    top: 2%;
 }
 
 .gridworks{
     position: absolute;
     width: 5%;
+}
+#win{
+    display: none;
+    position: absolute;
+    left: 45%;
+    top: 48%;
+    font-weight: bold;
+    font-size: 24px;
+    z-index: 5;
 }
 
 #sparkle{
