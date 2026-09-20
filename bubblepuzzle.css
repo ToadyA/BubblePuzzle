@@ -22,11 +22,25 @@
     position: absolute;
     width: 0.5%;
     height: 5%;
-    background-color: #00ff00;
-    border: 2px solid black;
+    background-color: transparent;
+    border: 4px solid black;
     z-index: 2;
     border-radius: 20px;
     left: 15%;
+}
+#meter{
+    position: absolute;
+    width: 0.6%;
+    height: 5.5%;
+    background-color: greenyellow;
+    z-index: 1;
+    left: 15.2%;
+    top: 1%;
+}
+
+.gridworks{
+    position: absolute;
+    width: 5%;
 }
 
 #sparkle{
